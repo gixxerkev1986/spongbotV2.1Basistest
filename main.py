@@ -3,13 +3,9 @@ from discord.ext import commands
 import asyncio
 import os
 
-# Environment variable voor je bot-token (Render)
 TOKEN = os.getenv("DISCORD_TOKEN")
+GUILD_ID = 1356894863454376105  # <-- Vervang indien nodig
 
-# Hardcoded Guild ID (vervang dit door jouw echte Discord server ID)
-GUILD_ID = 1356894863454376105
-
-# Bot setup
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -27,8 +23,12 @@ async def on_ready():
 
 async def main():
     async with bot:
-        await bot.load_extension("commands.ping")  # Laad ping commando
+        try:
+            await bot.load_extension("commands.ping")
+            print("[LOAD] ping.py succesvol geladen")
+        except Exception as e:
+            print(f"[ERROR] ping.py niet geladen: {e}")
         await bot.start(TOKEN)
 
-# Start bot
+# Start de bot
 asyncio.run(main())
